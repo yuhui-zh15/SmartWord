@@ -1,0 +1,35 @@
+objects = main.o Handler.o Processer.o SearchHandler.o ExampleHandler.o \
+ManageHandler.o AddHandler.o ModifyHandler.o \
+ChineseChoiceTestHandler.o EnglishChoiceTestHandler.o \
+HistoryHandler.o Login.o MyWordListHandler.o ReciteHandler.o \
+SpellTestHandler.o TestHandler.o TranslationHandler.o lib.dll\
+
+headers = Handler.h Processer.h SearchHandler.h ExampleHandler.h \
+ManageHandler.h AddHandler.h ModifyHandler.h ChineseTest.h \
+EnglishTest.h SpellTest.h Test.h Word.h Dictionary.h \
+ChineseChoiceTestHandler.h EnglishChoiceTestHandler.h History.h \
+HistoryHandler.h Login.h MyWordListHandler.h Recite.h ReciteHandler.h \
+SpellTestHandler.h TestHandler.h TestList.h Translation.h TranslationHandler.h\
+MakefileWindows
+
+libobjects = ChineseTest.o Dictionary.o EnglishTest.o History.o \
+Recite.o SpellTest.o Test.o TestList.o Translation.o Word.o\
+
+CC = g++
+CFLAGS = -Wall -std=c++11 -static
+
+all: smartword
+
+.PHONY: all, clean
+
+smartword: $(objects) $(headers)
+	$(CC) $(CFLAGS) $(objects) -o smartword
+
+lib.dll: $(libobjects)
+	$(CC) $(CFLAGS) $(libobjects) -o lib.dll -shared -fPIC
+
+%.o: %.cpp $(headers)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+clean: 
+	del smartword *.o
